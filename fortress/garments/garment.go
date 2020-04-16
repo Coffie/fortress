@@ -1,7 +1,9 @@
 package garments
 
-import "github.com/Coffie/fortress/database"
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/Coffie/fortress/database"
+	"github.com/jinzhu/gorm"
+)
 
 type Garment struct {
 	db    *gorm.DB
@@ -19,26 +21,22 @@ func (g *Garment) AmountInRotation() int {
 	return count
 }
 
+func (g *Garment) Id() uint {
+	return g.model.ID
+}
+
+func (g *Garment) Quantity() int {
+	return g.model.Quantity
+}
+
+func (g *Garment) Type() string {
+	return g.model.GarmentType
+}
+
 func (g *Garment) AmountInStock() int {
 	return g.model.Quantity - g.AmountInRotation()
 }
 
 func (g *Garment) InStock() bool {
 	return g.AmountInStock() > 0
-}
-
-func (g *Garment) Id() uint {
-	return g.model.ID
-}
-
-func (g *Garment) Color() string {
-	return g.model.Color
-}
-
-func (g *Garment) Size() string {
-	return g.model.Size
-}
-
-func (g *Garment) Quantity() int {
-	return g.model.Quantity
 }

@@ -6,6 +6,13 @@ type User struct {
 	Email string
 }
 
+type OwnedGarment struct {
+	ID             uint
+	GarmentID      uint
+	UserID         uint
+	SequenceNumber uint
+}
+
 type GarmentModel struct {
 	ID     uint
 	Name   string
@@ -15,14 +22,20 @@ type GarmentModel struct {
 type Garment struct {
 	ID             uint
 	GarmentModelID uint
+	GarmentType    string
 	Quantity       int
-	Color          string
-	Size           string
 }
 
-type OwnedGarment struct {
-	ID             uint
-	GarmentID      uint
-	UserID         uint
-	SequenceNumber uint
+type Flag struct {
+	ID      uint
+	Country string
+	Name    string
+}
+
+type FlagTshirt struct {
+	ID        uint
+	GarmentID uint
+	FlagID    uint
+	Size      string
+	Color     string
 }

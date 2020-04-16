@@ -1,10 +1,13 @@
 package main
 
-import "fmt"
-import "github.com/Coffie/fortress/database"
-import "github.com/Coffie/fortress/fortress/garments"
-import "github.com/Coffie/fortress/fortress/users"
-import "github.com/jinzhu/gorm"
+import (
+	"fmt"
+
+	"github.com/Coffie/fortress/database"
+	"github.com/Coffie/fortress/fortress/garments"
+	"github.com/Coffie/fortress/fortress/users"
+	"github.com/jinzhu/gorm"
+)
 
 var db *gorm.DB
 var garmentService *garments.GarmentService
@@ -30,7 +33,7 @@ func main() {
 	fmt.Println("purchased garment is owned garment:", erl.OwnedGarments()[0] == ownedGarment)
 
 	garmentModel := garmentService.GetGarmentModel("myfirstmodel")
-	g := garmentModel.GetGarment("xs", "blues")
+	g := garmentModel.Garments()[0]
 	fmt.Println("garment to buy: ", g)
 	erl.Buy(garment)
 	fmt.Println("owned garments:", erl.OwnedGarments())

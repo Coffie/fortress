@@ -27,27 +27,18 @@ func (g *GarmentModel) Garments() []Garment {
 	var dbGarments []database.Garment
 	g.db.Model(&database.GarmentModel{ID: g.Id()}).Related(&dbGarments)
 	garments := []Garment{}
-	for _, garment := range dbGarments {
-		garments = append(garments, NewGarment(g.db, garment))
+	for _, currentGarment := range dbGarments {
+		garments = append(garments, NewGarment(g.db, currentGarment))
 	}
 	return garments
 }
 
-func (g *GarmentModel) GetGarment(size string, color string) Garment {
-	var garment database.Garment
-	g.db.Model(&database.GarmentModel{ID: g.Id()}).
-		Where(&database.Garment{Size: size, Color: color}).
-		Related(&garment)
-	return NewGarment(g.db, garment)
-}
-
-func (g *GarmentModel) AddGarment(size string, color string, quantity int) Garment {
-	garment := database.Garment{
+func (g *GarmentModel) AddGarment(quantity int, garmentType string) Garment {
+	dbGarment := database.Garment{
 		GarmentModelID: g.model.ID,
+		GarmentType:    garmentType,
 		Quantity:       quantity,
-		Color:          color,
-		Size:           size,
 	}
-	g.db.Create(&garment)
-	return NewGarment(g.db, garment)
+	g.db.Create(&dbGarment)
+	return NewGarment(g.db, dbGarment)
 }

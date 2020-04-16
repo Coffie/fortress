@@ -13,7 +13,7 @@ type User struct {
 	model database.User
 }
 
-func NewUser(db *gorm.DB, model database.User) User {
+func New(db *gorm.DB, model database.User) User {
 	return User{db: db, model: model}
 }
 

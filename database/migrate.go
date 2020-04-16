@@ -1,8 +1,11 @@
 package database
 
-import "github.com/jinzhu/gorm"
-import "gopkg.in/gormigrate.v1"
-import "log"
+import (
+	"log"
+
+	"github.com/jinzhu/gorm"
+	"gopkg.in/gormigrate.v1"
+)
 
 func Migrate(db *gorm.DB) {
 	m := gormigrate.New(db, gormigrate.DefaultOptions, []*gormigrate.Migration{
