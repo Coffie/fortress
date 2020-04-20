@@ -24,3 +24,9 @@ func DropAll(db *gorm.DB) {
 	db.DropTableIfExists(&models.Flag{})
 	db.DropTableIfExists("migrations")
 }
+
+func TruncateAll(db *gorm.DB) {
+	db.Delete(&models.Tshirt{})
+	db.Delete(&models.TshirtGroup{})
+	db.Delete(&models.Flag{})
+}
