@@ -1,10 +1,13 @@
 package tshirts
 
-import "github.com/Coffie/fortress/database"
-import "github.com/Coffie/fortress/models"
-import "github.com/jinzhu/gorm"
-import "github.com/stretchr/testify/assert"
-import "testing"
+import (
+	"testing"
+
+	"github.com/Coffie/fortress/database"
+	"github.com/Coffie/fortress/models"
+	"github.com/jinzhu/gorm"
+	"github.com/stretchr/testify/assert"
+)
 
 type TestVars struct {
 	TshirtGroup models.TshirtGroup

@@ -6,7 +6,7 @@ import (
 	"github.com/Coffie/fortress/models"
 	"github.com/jinzhu/gorm"
 
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/jinzhu/gorm/dialects/postgres" // import driver
 )
 
 func NewDB(host string, port string, user string, dbname string, password string) *gorm.DB {

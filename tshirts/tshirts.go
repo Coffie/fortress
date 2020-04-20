@@ -1,7 +1,9 @@
 package tshirts
 
-import "github.com/Coffie/fortress/models"
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/Coffie/fortress/models"
+	"github.com/jinzhu/gorm"
+)
 
 type TshirtService struct {
 	db *gorm.DB
