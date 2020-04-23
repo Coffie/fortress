@@ -6,7 +6,7 @@ import (
 	"github.com/Coffie/fortress/models"
 	"github.com/jinzhu/gorm"
 
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/jinzhu/gorm/dialects/postgres" // import driver
 )
 
 func NewDB(host string, port string, user string, dbname string, password string) *gorm.DB {
@@ -23,4 +23,10 @@ func DropAll(db *gorm.DB) {
 	db.DropTableIfExists(&models.TshirtGroup{})
 	db.DropTableIfExists(&models.Flag{})
 	db.DropTableIfExists("migrations")
+}
+
+func TruncateAll(db *gorm.DB) {
+	db.Delete(&models.Tshirt{})
+	db.Delete(&models.TshirtGroup{})
+	db.Delete(&models.Flag{})
 }
