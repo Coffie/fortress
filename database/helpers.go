@@ -19,6 +19,7 @@ func NewDB(host string, port string, user string, dbname string, password string
 }
 
 func DropAll(db *gorm.DB) {
+	db.DropTableIfExists(&models.User{})
 	db.DropTableIfExists(&models.Tshirt{})
 	db.DropTableIfExists(&models.TshirtGroup{})
 	db.DropTableIfExists(&models.Flag{})
@@ -26,6 +27,7 @@ func DropAll(db *gorm.DB) {
 }
 
 func TruncateAll(db *gorm.DB) {
+	db.Delete(&models.User{})
 	db.Delete(&models.Tshirt{})
 	db.Delete(&models.TshirtGroup{})
 	db.Delete(&models.Flag{})

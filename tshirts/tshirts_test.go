@@ -11,7 +11,9 @@ import (
 
 type TestVars struct {
 	TshirtGroup models.TshirtGroup
+	Tshirt      models.Tshirt
 	CreatedFlag models.Flag
+	User models.User
 }
 
 var db *gorm.DB
@@ -23,6 +25,17 @@ func init() {
 	database.Migrate(db)
 	g = TestVars{
 		TshirtGroup: models.TshirtGroup{FlagID: 1, Name: "tg1"},
+		Tshirt: models.Tshirt{
+			ID:            1,
+			TshirtGroupID: 1,
+			Size:          "s",
+			Color:         "w",
+		},
+		User: models.User{
+			ID:                  1,
+			Name:                "u1",
+			Tshirts: make([]models.Tshirt, 0),
+		},
 	}
 }
 
@@ -217,5 +230,21 @@ func TestFlags(t *testing.T) {
 		assert.Nil(t, err)
 		flagList, _ := service.ListFlags()
 		assert.Equal(t, []models.Flag{}, flagList)
+	})
+}
+
+func TestUsers(t *testing.T) {
+	service := perTestSetup()
+	t.Run("a user can be added", func(t *testing.T) {
+		expected := models.User{100, "bla", make([]models.Tshirt, 0)}
+		actual, err := service.AddUser(expected)
+		assert.Nil(t, err)
+		assert.Equal(t, expected, actual)
+	})
+
+	service = perTestSetup()
+	t.Run("a user can be deleted", func(t *testing.T) {
+		err := service.DeleteUser(1)
+		assert.Nil(t, err)
 	})
 }

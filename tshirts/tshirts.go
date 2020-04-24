@@ -97,3 +97,19 @@ func (t *TshirtService) ListFlags() ([]models.Flag, error) {
 func (t *TshirtService) DeleteFlag(name string) error {
 	return t.db.Delete(&models.Flag{}, &models.Flag{Name: name}).Error
 }
+
+func (t *TshirtService) AddUser(user models.User) (models.User, error) {
+	err := t.db.Create(&user).Error
+	return user, err
+}
+
+func (t *TshirtService) GetUser(name string) (models.User, error) {
+	user := models.User{}
+	err := t.db.Where(&models.User{Name: name}).First(&user).Error
+	return user, err
+}
+
+func (t *TshirtService) DeleteUser(id uint) error {
+	err := t.db.Delete(&models.User{}, "id = ?", &id).Error
+	return err
+}

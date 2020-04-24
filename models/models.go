@@ -14,7 +14,13 @@ type TshirtGroup struct {
 
 type Tshirt struct {
 	ID            uint
-	TshirtGroupID uint
+	TshirtGroupID uint `gorm:"foreignkey:ID"`
 	Size          string
 	Color         string
+}
+
+type User struct {
+	ID                  uint
+	Name                string
+	Tshirts []Tshirt `gorm:"foreignkey:ID"`
 }
