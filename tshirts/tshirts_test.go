@@ -1,13 +1,11 @@
 package tshirts
 
-import (
-	"testing"
-
-	"github.com/Coffie/fortress/database"
-	"github.com/Coffie/fortress/models"
-	"github.com/jinzhu/gorm"
-	"github.com/stretchr/testify/assert"
-)
+import "fmt"
+import "github.com/Coffie/fortress/database"
+import "github.com/Coffie/fortress/models"
+import "github.com/jinzhu/gorm"
+import "github.com/stretchr/testify/assert"
+import "testing"
 
 type TestVars struct {
 	TshirtGroup models.TshirtGroup
@@ -82,8 +80,8 @@ func TestTshirtGroups(t *testing.T) {
 	})
 
 	service = perTestSetup()
-	_, _ = service.AddTshirtGroup(g.TshirtGroup)
-	_, _ = service.AddTshirtGroup(models.TshirtGroup{
+	service.AddTshirtGroup(g.TshirtGroup)
+	service.AddTshirtGroup(models.TshirtGroup{
 		FlagID: g.CreatedFlag.ID,
 		Name:   "tg2",
 	})
@@ -132,12 +130,13 @@ func TestTshirts(t *testing.T) {
 	service = perTestSetup()
 	t.Run("listing from missing tshirt group returns error", func(t *testing.T) {
 		actual, err := service.ListTshirts("notexist")
+		fmt.Printf("%+v", err)
 		assert.Equal(t, []models.Tshirt{}, actual)
 		assert.NotNil(t, err)
 	})
 
 	service = perTestSetup()
-	_, _ = service.AddTshirtGroup(g.TshirtGroup)
+	service.AddTshirtGroup(g.TshirtGroup)
 	t.Run("listing no tshirts yields empty list", func(t *testing.T) {
 		actual, err := service.ListTshirts(g.TshirtGroup.Name)
 		assert.Equal(t, []models.Tshirt{}, actual)
@@ -153,7 +152,7 @@ func TestTshirts(t *testing.T) {
 	t.Run("listing tshirts in group returns only tshirts in that group", func(t *testing.T) {
 		ts1, _ := service.AddTshirt(models.Tshirt{TshirtGroupID: createdTshirtGroup.ID, Size: "XL", Color: "red"})
 		ts2, _ := service.AddTshirt(models.Tshirt{TshirtGroupID: createdTshirtGroup.ID, Size: "XL", Color: "red"})
-		_, _ = service.AddTshirt(models.Tshirt{TshirtGroupID: otherTshirtGroup.ID, Size: "XL", Color: "red"})
+		service.AddTshirt(models.Tshirt{TshirtGroupID: otherTshirtGroup.ID, Size: "XL", Color: "red"})
 		actual, err := service.ListTshirts(createdTshirtGroup.Name)
 		assert.Equal(t, []models.Tshirt{ts1, ts2}, actual)
 		assert.Nil(t, err)

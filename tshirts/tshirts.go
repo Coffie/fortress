@@ -1,6 +1,8 @@
 package tshirts
 
 import (
+	"github.com/pkg/errors"
+
 	"github.com/Coffie/fortress/models"
 	"github.com/jinzhu/gorm"
 )
@@ -56,7 +58,7 @@ func (t *TshirtService) ListTshirts(tshirtGroupName string) ([]models.Tshirt, er
 		}
 		return nil
 	})
-	return tshirts, err
+	return tshirts, errors.Wrap(err, "could not list tshirts")
 }
 
 func (t *TshirtService) DeleteTshirt(tshirtGroupName string, size string, color string) error {
