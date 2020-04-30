@@ -39,6 +39,21 @@ func Migrate(db *gorm.DB) {
 				).Error; err != nil {
 					return err
 				}
+
+				if err := tx.AutoMigrate(&models.FortressThing{}).Error; err != nil {
+					return err
+				}
+				if err := tx.AutoMigrate(&models.FortressThingInstance{}).Error; err != nil {
+					return err
+				}
+				if err := tx.Model(&models.FortressThingInstance{}).AddForeignKey(
+					"fortress_thing_id",
+					"fortress_things(id)",
+					"CASCADE",
+					"RESTRICT",
+				).Error; err != nil {
+					return err
+				}
 				return nil
 			},
 			Rollback: func(tx *gorm.DB) error {
@@ -49,6 +64,12 @@ func Migrate(db *gorm.DB) {
 					return err
 				}
 				if err := tx.DropTable(&models.Flag{}).Error; err != nil {
+					return err
+				}
+				if err := tx.DropTable(&models.FortressThing{}).Error; err != nil {
+					return err
+				}
+				if err := tx.DropTable(&models.FortressThingInstance{}).Error; err != nil {
 					return err
 				}
 				return nil

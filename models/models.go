@@ -18,3 +18,14 @@ type Tshirt struct {
 	Size          string
 	Color         string
 }
+
+type FortressThing struct {
+	ID       uint
+	Capacity uint
+}
+
+type FortressThingInstance struct {
+	ID              uint
+	FortressThingID uint
+	SequenceNumber  uint
+}
