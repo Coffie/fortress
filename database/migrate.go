@@ -39,9 +39,15 @@ func Migrate(db *gorm.DB) {
 				).Error; err != nil {
 					return err
 				}
+				if err := tx.AutoMigrate(&models.User{}).Error; err != nil {
+					return nil
+				}
 				return nil
 			},
 			Rollback: func(tx *gorm.DB) error {
+				if err := tx.DropTable(&models.User{}).Error; err != nil {
+					return err
+				}
 				if err := tx.DropTable(&models.Tshirt{}).Error; err != nil {
 					return err
 				}
